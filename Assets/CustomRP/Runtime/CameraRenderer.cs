@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using UnityEditor;
+using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.RendererUtils;
 
@@ -11,21 +12,21 @@ public partial class CameraRenderer
     private CullingResults _cullingResults;
 
     private static ShaderTagId _unlitShaderTagId = new ShaderTagId("SRPDefaultUnlit");
-
+    private static ShaderTagId _litShaderTagId = new ShaderTagId("CustomLit");
 
     private bool _useDynamicBatching;
     private bool _useGPUInstancing;
-    private bool _useSRPBatcher;
 
-    public void Render(ScriptableRenderContext context, Camera camera, bool useDynamicBatching, bool useGPUInstancing, bool useSRPBatcher)
+    private Light _lighting  = new();
+    
+    public void Render(ScriptableRenderContext context, Camera camera, bool useDynamicBatching, bool useGPUInstancing, bool useSrpBatcher)
     {
         _context = context;
         _camera = camera;
         _useDynamicBatching = useDynamicBatching;
         _useGPUInstancing = useGPUInstancing;
-        _useSRPBatcher = useSRPBatcher;
         
-        GraphicsSettings.useScriptableRenderPipelineBatching = _useSRPBatcher;
+        GraphicsSettings.useScriptableRenderPipelineBatching = useSrpBatcher;
 
         PrepareBuff();
         PrepareForSceneWindow();
@@ -36,6 +37,7 @@ public partial class CameraRenderer
         }
 
         Setup();
+        _lighting.Setup(context, _cullingResults);
         DrawVisibleGeometry();
         DrawUnsupportedShaders();
         DrawGizoms();
@@ -72,55 +74,28 @@ public partial class CameraRenderer
         _buffer.DrawRendererList(skyBoxRendererList);
         
         // 不透明物体
-        var sortingOpaque = new SortingSettings(_camera) { criteria = SortingCriteria.CommonOpaque };
-        var drawingSettingsOpaque = new DrawingSettings(_unlitShaderTagId, sortingOpaque)
-        {
-            enableInstancing = _useGPUInstancing,
-            enableDynamicBatching = _useDynamicBatching,
-        };
-        var filteringOpaque = new FilteringSettings(RenderQueueRange.opaque);
+        var drawingSettingsOpaque = new DrawingSettings();
+        drawingSettingsOpaque.sortingSettings = new SortingSettings(_camera) { criteria = SortingCriteria.CommonOpaque };
+        drawingSettingsOpaque.enableInstancing = _useGPUInstancing;
+        drawingSettingsOpaque.enableDynamicBatching = _useDynamicBatching;
+        drawingSettingsOpaque.SetShaderPassName(0, _litShaderTagId);
+        drawingSettingsOpaque.SetShaderPassName(1,_unlitShaderTagId);
         
-        var opaqueParams = new RendererListParams(_cullingResults, drawingSettingsOpaque, filteringOpaque);
+        var opaqueParams = new RendererListParams(_cullingResults, drawingSettingsOpaque, new FilteringSettings(RenderQueueRange.opaque));
         var opaqueRendererList = _context.CreateRendererList(ref opaqueParams);
         _buffer.DrawRendererList(opaqueRendererList);
         
         // 透明物体
-        var sortingTransparent = new SortingSettings(_camera) { criteria = SortingCriteria.CommonTransparent };
-        var drawingSettingsTransparent = new DrawingSettings(_unlitShaderTagId, sortingTransparent)
-        {
-            enableInstancing = true,
-            enableDynamicBatching = true
-        };
-        var filteringTransparent = new FilteringSettings(RenderQueueRange.transparent);
-        var transparentParams = new RendererListParams(_cullingResults,drawingSettingsTransparent, filteringTransparent);
+        var drawingSettingsTransparent = new DrawingSettings();
+        drawingSettingsTransparent.sortingSettings = new SortingSettings(_camera) { criteria = SortingCriteria.CommonTransparent };
+        drawingSettingsTransparent.enableInstancing = _useGPUInstancing;
+        drawingSettingsTransparent.enableDynamicBatching = _useDynamicBatching;
+        drawingSettingsTransparent.SetShaderPassName(0, _litShaderTagId);
+        drawingSettingsTransparent.SetShaderPassName(1,_unlitShaderTagId);
+        
+        var transparentParams = new RendererListParams(_cullingResults,drawingSettingsTransparent, new FilteringSettings(RenderQueueRange.transparent));
         var transparentRendererList = _context.CreateRendererList(ref transparentParams);
         _buffer.DrawRendererList(transparentRendererList);
-
-        /*// 不透明物体
-        var opaqueRendererListDesc = new RendererListDesc(_unlitShaderTagId, _cullingResults, _camera)
-        {
-            // 绘制顺序
-            sortingCriteria = SortingCriteria.CommonOpaque,
-            // 渲染队列
-            renderQueueRange = RenderQueueRange.opaque,
-        };
-        // 透明物体
-        var transparentRendererListDesc = new RendererListDesc(_unlitShaderTagId, _cullingResults, _camera)
-        {
-            // 绘制顺序
-            sortingCriteria = SortingCriteria.CommonTransparent,
-            // 渲染队列
-            renderQueueRange = RenderQueueRange.transparent,
-        };
-        // 1.不透明
-        var opaqueRendererList = _context.CreateRendererList(opaqueRendererListDesc);
-        _buffer.DrawRendererList(opaqueRendererList);
-        // 2.天空盒
-        var skyBoxRendererList = _context.CreateSkyboxRendererList(_camera);
-        _buffer.DrawRendererList(skyBoxRendererList);
-        // 3.透明物体
-        var transparentRendererList = _context.CreateRendererList(transparentRendererListDesc);
-        _buffer.DrawRendererList(transparentRendererList);*/
         
         ExecuteBuffer();
     }

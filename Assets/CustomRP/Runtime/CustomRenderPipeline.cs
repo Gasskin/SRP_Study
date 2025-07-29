@@ -7,20 +7,21 @@ public class CustomRenderPipeline: RenderPipeline
 
     private bool _useDynamicBatching;
     private bool _useGPUInstancing;
-    private bool _useSRPBatcher;
+    private bool _useSrpBatcher;
     
-    public CustomRenderPipeline(bool useDynamicBatching, bool useGPUInstancing, bool useSRPBatcher)
+    public CustomRenderPipeline(bool useDynamicBatching, bool useGPUInstancing, bool useSrpBatcher)
     {
         _useDynamicBatching = useDynamicBatching;
         _useGPUInstancing = useGPUInstancing;
-        _useSRPBatcher = useSRPBatcher;
+        _useSrpBatcher = useSrpBatcher;
+        GraphicsSettings.lightsUseLinearIntensity = true;
     }
     
     protected override void Render(ScriptableRenderContext context, Camera[] cameras)
     {
         foreach (var camera in cameras)
         {
-            _renderer.Render(context, camera, _useDynamicBatching, _useGPUInstancing, _useSRPBatcher);
+            _renderer.Render(context, camera, _useDynamicBatching, _useGPUInstancing, _useSrpBatcher);
         }
     }
 }

@@ -152,6 +152,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _baseColor: {r: 0.3920711, g: 0.12639922, b: 0.48427665, a: 1}
+  _cutoff: 0.5
 --- !u!135 &575497432
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -274,6 +275,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _baseColor: {r: 1, g: 1, b: 1, a: 1}
+  _cutoff: 0.5
 --- !u!135 &619146931
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -318,7 +320,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 3beb93f44a30f3848993eee54707d725, type: 2}
+  - {fileID: 2100000, guid: 7ebffaafc44083e4ba64d8228dbd4a04, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -504,6 +506,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _baseColor: {r: 0.7484276, g: 0.18593001, b: 0.6143695, a: 1}
+  _cutoff: 0.5
 --- !u!135 &951877126
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -894,13 +897,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1318981512}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0.124098025, y: 0.07638147, z: -0.009581508, w: 0.98927945}
   m_LocalPosition: {x: 0, y: 1, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 14.3, y: 8.83, z: 0}
 --- !u!1 &1464459203
 GameObject:
   m_ObjectHideFlags: 0
@@ -1042,6 +1045,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _baseColor: {r: 0.9496855, g: 0.6380614, b: 0.2000908, a: 1}
+  _cutoff: 0.5
 --- !u!135 &1562329254
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1086,7 +1090,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 3beb93f44a30f3848993eee54707d725, type: 2}
+  - {fileID: 2100000, guid: 7ebffaafc44083e4ba64d8228dbd4a04, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1477,6 +1481,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _baseColor: {r: 1, g: 0, b: 0, a: 1}
+  _cutoff: 0.5
 --- !u!135 &2066910928
 SphereCollider:
   m_ObjectHideFlags: 0

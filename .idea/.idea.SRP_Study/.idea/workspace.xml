@@ -5,14 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6fe9cb32-96a3-4b5e-91d5-6a3dbbbb2793" name="更改" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.SRP_Study/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.SRP_Study/.idea/encodings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.SRP_Study/.idea/indexLayout.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.SRP_Study/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.SRP_Study/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.SRP_Study/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.SRP_Study/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/0.0.4/1.渲染阴影/渲染阴影.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/0.0.4/1.渲染阴影/渲染阴影.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/CustomRP/Runtime/CameraRenderer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/CustomRP/Runtime/CameraRenderer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/CustomRP/Assets/CustomRP.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/CustomRP/Assets/CustomRP.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/CustomRP/Runtime/Shadows.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/CustomRP/Runtime/Shadows.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/CustomRP/Shaders/Lit.shader" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/CustomRP/Shaders/Lit.shader" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/Packages/com.unity.testtools.codecoverage/Settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/Packages/com.unity.testtools.codecoverage/Settings.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,9 +25,9 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d292e42b7b354516a1fbb4aaa866bbc81dfe00/45/81685b9c/LightType.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d292e42b7b354516a1fbb4aaa866bbc81dfe00/61/0f75a6cd/MaterialPropertyBlock.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d292e42b7b354516a1fbb4aaa866bbc81dfe00/f3/656a744e/LightShadows.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d292e42b7b354516a1fbb4aaa866bbc81dfe00/0f/ea2d8403/ScriptableRenderContext.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d292e42b7b354516a1fbb4aaa866bbc81dfe00/1a/a85fd6b6/ShadowDrawingSettings.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d292e42b7b354516a1fbb4aaa866bbc81dfe00/de/e46fbe7b/ShadowCastersCullingInfos.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.core@da6c8615357e/ShaderLibrary/SpaceTransforms.hlsl" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="ProjectColorInfo">{
@@ -82,15 +81,13 @@
       <option name="PTY_MODE" value="Auto" />
       <method v="2" />
     </configuration>
-    <configuration name="附加到 Unity 编辑器" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="76076">
+    <configuration name="附加到 Unity 编辑器" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" value="76076" />
+      <option name="pid" />
       <option name="projectPathOnTarget" />
       <option name="runtimes">
-        <list>
-          <MonoRuntime />
-        </list>
+        <list />
       </option>
       <option name="selectedOptions">
         <list />
@@ -122,6 +119,7 @@
       <updated>1753774981401</updated>
       <workItem from="1753774982639" duration="15734000" />
       <workItem from="1753864020136" duration="6448000" />
+      <workItem from="1753893874706" duration="4104000" />
     </task>
     <servers />
   </component>

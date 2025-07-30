@@ -23,7 +23,7 @@ public class Light
         name = BUFFER_NAME
     };
 
-    public void Setup(ScriptableRenderContext context, CullingResults cullingResults)
+    public void Setup(ScriptableRenderContext context, CullingResults cullingResults, ShadowSettings shadows)
     {
         _cullingResults = cullingResults;
         _buffer.BeginSample(BUFFER_NAME);

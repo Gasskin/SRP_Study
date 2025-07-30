@@ -8,6 +8,7 @@ public partial class CameraRenderer
     private ScriptableRenderContext _context;
     private Camera _camera;
     private CommandBuffer _buffer = new();
+    private ShadowSettings _shadows;
 
     private CullingResults _cullingResults;
 
@@ -17,27 +18,28 @@ public partial class CameraRenderer
     private bool _useDynamicBatching;
     private bool _useGPUInstancing;
 
-    private Light _lighting  = new();
-    
-    public void Render(ScriptableRenderContext context, Camera camera, bool useDynamicBatching, bool useGPUInstancing, bool useSrpBatcher)
+    private Light _lighting = new();
+
+    public void Render(ScriptableRenderContext context, Camera camera, bool useDynamicBatching, bool useGPUInstancing, bool useSrpBatcher, ShadowSettings shadows)
     {
         _context = context;
         _camera = camera;
         _useDynamicBatching = useDynamicBatching;
         _useGPUInstancing = useGPUInstancing;
-        
+        _shadows = shadows;
+
         GraphicsSettings.useScriptableRenderPipelineBatching = useSrpBatcher;
 
         PrepareBuff();
         PrepareForSceneWindow();
 
-        if (!Cull())
+        if (!Cull(_shadows.MaxDistance))
         {
             return;
         }
 
         Setup();
-        _lighting.Setup(context, _cullingResults);
+        _lighting.Setup(context, _cullingResults, _shadows);
         DrawVisibleGeometry();
         DrawUnsupportedShaders();
         DrawGizoms();
@@ -45,10 +47,11 @@ public partial class CameraRenderer
     }
 
 
-    private bool Cull()
+    private bool Cull(float shadowsMaxDistance)
     {
         if (_camera.TryGetCullingParameters(out var p))
         {
+            p.shadowDistance = Mathf.Min(shadowsMaxDistance, _camera.farClipPlane);
             _cullingResults = _context.Cull(ref p);
             return true;
         }
@@ -72,31 +75,31 @@ public partial class CameraRenderer
         // 天空盒
         var skyBoxRendererList = _context.CreateSkyboxRendererList(_camera);
         _buffer.DrawRendererList(skyBoxRendererList);
-        
+
         // 不透明物体
         var drawingSettingsOpaque = new DrawingSettings();
         drawingSettingsOpaque.sortingSettings = new SortingSettings(_camera) { criteria = SortingCriteria.CommonOpaque };
         drawingSettingsOpaque.enableInstancing = _useGPUInstancing;
         drawingSettingsOpaque.enableDynamicBatching = _useDynamicBatching;
         drawingSettingsOpaque.SetShaderPassName(0, _litShaderTagId);
-        drawingSettingsOpaque.SetShaderPassName(1,_unlitShaderTagId);
-        
+        drawingSettingsOpaque.SetShaderPassName(1, _unlitShaderTagId);
+
         var opaqueParams = new RendererListParams(_cullingResults, drawingSettingsOpaque, new FilteringSettings(RenderQueueRange.opaque));
         var opaqueRendererList = _context.CreateRendererList(ref opaqueParams);
         _buffer.DrawRendererList(opaqueRendererList);
-        
+
         // 透明物体
         var drawingSettingsTransparent = new DrawingSettings();
         drawingSettingsTransparent.sortingSettings = new SortingSettings(_camera) { criteria = SortingCriteria.CommonTransparent };
         drawingSettingsTransparent.enableInstancing = _useGPUInstancing;
         drawingSettingsTransparent.enableDynamicBatching = _useDynamicBatching;
         drawingSettingsTransparent.SetShaderPassName(0, _litShaderTagId);
-        drawingSettingsTransparent.SetShaderPassName(1,_unlitShaderTagId);
-        
-        var transparentParams = new RendererListParams(_cullingResults,drawingSettingsTransparent, new FilteringSettings(RenderQueueRange.transparent));
+        drawingSettingsTransparent.SetShaderPassName(1, _unlitShaderTagId);
+
+        var transparentParams = new RendererListParams(_cullingResults, drawingSettingsTransparent, new FilteringSettings(RenderQueueRange.transparent));
         var transparentRendererList = _context.CreateRendererList(ref transparentParams);
         _buffer.DrawRendererList(transparentRendererList);
-        
+
         ExecuteBuffer();
     }
 

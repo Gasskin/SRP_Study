@@ -9,10 +9,12 @@ public class CustomRenderPipelineAsset : RenderPipelineAsset
     [SerializeField]
     private bool _useGPUInstancing = true;
     [SerializeField]
-    private bool _useSRPBatcher = true;
+    private bool _useSrpBatcher = true;
+    [SerializeField]
+    private ShadowSettings _shadows;
 
     protected override RenderPipeline CreatePipeline()
     {
-        return new CustomRenderPipeline(_useDynamicBatching, _useGPUInstancing, _useSRPBatcher);
+        return new CustomRenderPipeline(_useDynamicBatching, _useGPUInstancing, _useSrpBatcher, _shadows);
     }
 }

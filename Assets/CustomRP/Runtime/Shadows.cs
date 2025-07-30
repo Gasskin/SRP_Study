@@ -59,6 +59,16 @@ public class Shadows
         {
             RenderDirectionalShadows();
         }
+        //对于WebGL 2.0来说，不领取纹理会出问题，因为它把纹理和采样器绑定在了一起
+        //为了避免这种情况，我们可以引入一个着色器关键字，生成着色器变体跳过阴影采样代码
+        //另一个替代的办法是当不需要阴影时，获取一个1×1的空纹理来避免额外的着色器变体。我们就用这种方法
+        else
+        {
+            _buffer.GetTemporaryRT(
+                _dirShadowAtlasId, 1, 1,
+                32, FilterMode.Bilinear, RenderTextureFormat.Shadowmap
+            );
+        }
     }
 
     public void Cleanup()
@@ -71,6 +81,9 @@ public class Shadows
     {
         int atlasSize = (int)_settings.Directional.AtlasSize;
         _buffer.GetTemporaryRT(_dirShadowAtlasId, atlasSize, atlasSize, 32, FilterMode.Bilinear, RenderTextureFormat.Shadowmap);
+        _buffer.SetRenderTarget(_dirShadowAtlasId, RenderBufferLoadAction.DontCare, RenderBufferStoreAction.Store);
+        _buffer.ClearRenderTarget(true, false, Color.clear);
+        ExecuteBuffer();
     }
 
     private void ExecuteBuffer()

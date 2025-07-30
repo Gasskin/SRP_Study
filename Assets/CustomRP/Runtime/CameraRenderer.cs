@@ -12,8 +12,8 @@ public partial class CameraRenderer
 
     private CullingResults _cullingResults;
 
-    private static ShaderTagId _unlitShaderTagId = new ShaderTagId("SRPDefaultUnlit");
-    private static ShaderTagId _litShaderTagId = new ShaderTagId("CustomLit");
+    private static ShaderTagId _unlitShaderTagId = new("SRPDefaultUnlit");
+    private static ShaderTagId _litShaderTagId = new("CustomLit");
 
     private bool _useDynamicBatching;
     private bool _useGPUInstancing;
@@ -37,9 +37,11 @@ public partial class CameraRenderer
         {
             return;
         }
-
-        Setup();
+        _buffer.BeginSample(_buffer.name);
+        ExecuteBuffer();
         _lighting.Setup(context, _cullingResults, _shadows);
+        _buffer.EndSample(_buffer.name);
+        Setup();
         DrawVisibleGeometry();
         DrawUnsupportedShaders();
         DrawGizoms();

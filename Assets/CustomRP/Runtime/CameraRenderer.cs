@@ -18,7 +18,7 @@ public partial class CameraRenderer
     private bool _useDynamicBatching;
     private bool _useGPUInstancing;
 
-    private Light _lighting = new();
+    private Lighting _lighting = new();
 
     public void Render(ScriptableRenderContext context, Camera camera, bool useDynamicBatching, bool useGPUInstancing, bool useSrpBatcher, ShadowSettings shadows)
     {
@@ -43,6 +43,7 @@ public partial class CameraRenderer
         DrawVisibleGeometry();
         DrawUnsupportedShaders();
         DrawGizoms();
+        _lighting.Cleanup();
         Submit();
     }
 
